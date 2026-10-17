@@ -1,0 +1,10 @@
+spring.application.name=desafio-cartoes
+
+# PostgreSQL
+spring.datasource.url=jdbc:postgresql://localhost:5432/desafio_cartoes
+spring.datasource.username=postgres
+spring.datasource.password=SUA_SENHA
+
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
