@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,7 +17,7 @@ import jakarta.validation.constraints.NotNull;
 public class Cartao {
 
 @Id
-@GeneratedValue (strategy = GenerationType.SEQUENCE)
+@GeneratedValue (strategy = GenerationType.IDENTITY)
 private Long id;
 @Column (nullable = false, unique = true)
 @NotNull 
@@ -31,7 +32,7 @@ private Boolean status;
 @Enumerated (EnumType.STRING)
 @NotNull
 private TipoCartao tipoCartao;
-@ManyToOne 
+@ManyToOne (fetch = FetchType.LAZY)
 @JoinColumn (name = "usuario_id", nullable = false)
 private Usuario usuario;
 

@@ -5,6 +5,15 @@ spring.datasource.url=jdbc:postgresql://localhost:5432/desafio_cartoes
 spring.datasource.username=postgres
 spring.datasource.password=SUA_SENHA
 
-# JPA / Hibernate
-spring.jpa.hibernate.ddl-auto=update
+# JPA / Hibernate (o schema é criado pelo Flyway em db/migration)
+spring.jpa.hibernate.ddl-auto=validate
 spring.jpa.show-sql=true
+spring.jpa.open-in-view=false
+
+# JWT (segredo com no mínimo 32 caracteres)
+app.jwt.secret=TROQUE-ESTE-SEGREDO-POR-UM-VALOR-LONGO-E-ALEATORIO
+app.jwt.validade=2h
+
+# Administrador criado na primeira execução
+app.admin.email=admin@desafio.com
+app.admin.senha=admin123

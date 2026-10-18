@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.desafio.desafio_cartoes.entity.Cartao;
+import com.desafio.desafio_cartoes.dto.CartaoRequestDTO;
+import com.desafio.desafio_cartoes.dto.CartaoResponseDTO;
+import com.desafio.desafio_cartoes.dto.CartaoUpdateDTO;
 import com.desafio.desafio_cartoes.service.CartaoService;
 
 import jakarta.validation.Valid;
@@ -31,24 +33,27 @@ public class CartaoController {
     }
 
     @GetMapping
-    public List<Cartao> listar() {
-        return service.listar();
+    public List<CartaoResponseDTO> listar() {
+        return service.listar()
+        .stream()
+        .map(CartaoResponseDTO::de)
+        .toList();
     }
 
     @GetMapping("/{id}")
-    public Cartao localizar(@PathVariable Long id) {
-        return service.localizar(id);
+    public CartaoResponseDTO localizar(@PathVariable Long id) {
+        return CartaoResponseDTO.de(service.localizar(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cartao cadastrar(@RequestParam Long usuarioId, @Valid @RequestBody Cartao cartao) {
-        return service.cadastrar(cartao, usuarioId);
+    public CartaoResponseDTO cadastrar(@RequestParam Long usuarioId, @Valid @RequestBody CartaoRequestDTO cartao) {
+        return CartaoResponseDTO.de(service.cadastrar(cartao, usuarioId));
     }
 
     @PutMapping("/{id}")
-    public Cartao atualizar(@PathVariable Long id, @Valid @RequestBody Cartao cartao) {
-        return service.atualizar(id, cartao);
+    public CartaoResponseDTO atualizar(@PathVariable Long id, @Valid @RequestBody CartaoUpdateDTO cartao) {
+        return CartaoResponseDTO.de(service.atualizar(id, cartao));
     }
 
     @DeleteMapping("/{id}")
