@@ -10,7 +10,7 @@ Aplicação web para gerenciar usuários e seus cartões de ônibus, com autenti
 ## Como executar
 
 ### Pré-requisitos
-- JDK 25 (o projeto exige no mínimo Java 8; usa a versão LTS atual)
+- JDK 25 — versão utilizada no desenvolvimento do projeto
 - Node 22 ou superior e npm
 - PostgreSQL com um banco vazio chamado `desafio_cartoes`:
   ```sql
