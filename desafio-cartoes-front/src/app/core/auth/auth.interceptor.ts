@@ -7,7 +7,6 @@ import { mensagemDeErro } from '../erro-api';
 import { ToastService } from '../../shared/toast/toast.service';
 import { AuthService } from './auth.service';
 
-/** Anexa o JWT às chamadas da API, encerra a sessão em caso de 401 e avisa sobre 403. */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
   const router = inject(Router);

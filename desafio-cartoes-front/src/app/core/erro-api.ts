@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
-/** Extrai uma mensagem amigável de um erro (ProblemDetail) da API. */
 export function mensagemDeErro(erro: unknown): string {
   if (erro instanceof HttpErrorResponse) {
     if (erro.status === 0) {
@@ -17,7 +16,6 @@ export function mensagemDeErro(erro: unknown): string {
   return 'Ocorreu um erro inesperado.';
 }
 
-/** Erros de validação por campo devolvidos pela API (propriedade "erros"). */
 export function errosPorCampo(erro: unknown): Record<string, string> {
   if (erro instanceof HttpErrorResponse && erro.status === 400) {
     const erros = erro.error?.erros;

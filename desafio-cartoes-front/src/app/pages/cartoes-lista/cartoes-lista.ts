@@ -7,7 +7,6 @@ import { CartaoService } from '../../core/services/cartao.service';
 import { UsuarioService } from '../../core/services/usuario.service';
 import { CartoesTabela } from '../../shared/cartoes-tabela/cartoes-tabela';
 
-/** Lista global de cartões (administrador). */
 @Component({
   selector: 'app-cartoes-lista',
   imports: [RouterLink, CartoesTabela],

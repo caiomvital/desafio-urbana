@@ -14,12 +14,10 @@ export interface LoginResponse {
   perfil: Perfil;
 }
 
-/** Sessão persistida no navegador. */
 export interface Sessao {
   token: string;
   usuarioId: number;
   nome: string;
   perfil: Perfil;
-  /** Instante (epoch ms) em que o token expira. */
   expiraEm: number;
 }

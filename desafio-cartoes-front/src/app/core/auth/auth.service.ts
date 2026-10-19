@@ -40,7 +40,6 @@ export class AuthService {
     }
   }
 
-  /** Reflete na sessão o nome alterado no perfil. */
   atualizarNome(nome: string): void {
     const sessao = this._sessao();
     if (sessao) {
@@ -48,7 +47,6 @@ export class AuthService {
     }
   }
 
-  /** Token somente se a sessão ainda for válida. */
   token(): string | null {
     const sessao = this._sessao();
     return this.sessaoValida(sessao) ? sessao!.token : null;

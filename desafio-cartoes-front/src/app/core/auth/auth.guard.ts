@@ -15,7 +15,6 @@ export const adminGuard: CanActivateFn = () => {
   return auth.admin() ? true : inject(Router).createUrlTree(['/inicio']);
 };
 
-/** Impede usuários já logados de voltar à tela de login. */
 export const visitanteGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
   return auth.autenticado() ? inject(Router).createUrlTree(['/inicio']) : true;

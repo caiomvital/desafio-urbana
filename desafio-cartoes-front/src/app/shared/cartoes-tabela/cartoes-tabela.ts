@@ -9,7 +9,6 @@ import { ToastService } from '../toast/toast.service';
 
 const TAMANHO_PAGINA = 10;
 
-/** Tabela de cartões com busca, filtros, paginação e ações (ativar/desativar, remover). */
 @Component({
   selector: 'app-cartoes-tabela',
   imports: [RouterLink, Paginacao],
@@ -21,12 +20,9 @@ export class CartoesTabela {
   private readonly toast = inject(ToastService);
 
   readonly cartoes = input.required<Cartao[]>();
-  /** Exibe a coluna com o nome do dono do cartão. */
   readonly mostrarUsuario = input(false);
   readonly nomesUsuarios = input<Record<number, string>>({});
-  /** Exibe o botão de edição (somente administradores). */
   readonly podeEditar = input(false);
-  /** Emitido após uma alteração bem-sucedida, para a página recarregar os dados. */
   readonly alterado = output<void>();
 
   protected readonly tipos = TIPOS_CARTAO;

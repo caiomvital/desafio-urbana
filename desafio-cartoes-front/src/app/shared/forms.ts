@@ -1,7 +1,6 @@
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { errosPorCampo } from '../core/erro-api';
 
-/** Exibe o erro de um campo só depois que o usuário interagiu com ele. */
 export function campoInvalido(controle: AbstractControl): boolean {
   return controle.invalid && (controle.touched || controle.dirty);
 }
@@ -32,7 +31,6 @@ export function mensagemCampo(controle: AbstractControl): string {
   return 'Valor inválido.';
 }
 
-/** Valida que dois campos do grupo têm o mesmo valor. */
 export function senhasIguais(campo: string, confirmacao: string): ValidatorFn {
   return (grupo: AbstractControl): ValidationErrors | null => {
     const confirmar = grupo.get(confirmacao);
@@ -51,7 +49,6 @@ export function senhasIguais(campo: string, confirmacao: string): ValidatorFn {
   };
 }
 
-/** Copia os erros de validação do servidor para os campos correspondentes. */
 export function aplicarErrosDoServidor(form: FormGroup, erro: unknown): void {
   for (const [campo, mensagem] of Object.entries(errosPorCampo(erro))) {
     const controle = form.get(campo);

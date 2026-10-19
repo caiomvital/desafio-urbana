@@ -9,17 +9,14 @@ export class CartaoService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = inject(API_URL);
 
-  /** Todos os cartões (somente ADMIN). */
   listar(): Observable<Cartao[]> {
     return this.http.get<Cartao[]>(`${this.apiUrl}/cartoes`);
   }
 
-  /** Um cartão (somente ADMIN). */
   localizar(id: number): Observable<Cartao> {
     return this.http.get<Cartao>(`${this.apiUrl}/cartoes/${id}`);
   }
 
-  /** Edita nome e tipo (somente ADMIN). */
   atualizar(id: number, dto: CartaoUpdate): Observable<Cartao> {
     return this.http.put<Cartao>(`${this.apiUrl}/cartoes/${id}`, dto);
   }

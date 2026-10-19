@@ -63,6 +63,15 @@ class ApiIntegrationTest {
     }
 
     @Test
+    void cadastroRejeitaSenhaCurta() throws Exception {
+        mvc.perform(post("/usuarios")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"nome\":\"Caio\",\"email\":\"caio@email.com\",\"senha\":\"123\"}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.erros.senha").value("A senha deve ter ao menos 6 caracteres."));
+    }
+
+    @Test
     void cadastroDeUsuarioEPublicoEValidaCampos() throws Exception {
         mvc.perform(post("/usuarios")
                 .contentType(MediaType.APPLICATION_JSON)

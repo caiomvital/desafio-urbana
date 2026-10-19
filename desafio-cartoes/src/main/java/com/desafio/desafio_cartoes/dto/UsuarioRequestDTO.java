@@ -2,9 +2,10 @@ package com.desafio.desafio_cartoes.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public record UsuarioRequestDTO(
     @NotBlank String nome,
     @NotBlank @Email String email,
-    @NotBlank String senha
+    @NotBlank @Size(min = 6, message = "A senha deve ter ao menos 6 caracteres.") String senha
 ) {}
