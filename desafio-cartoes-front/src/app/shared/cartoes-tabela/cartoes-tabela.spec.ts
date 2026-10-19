@@ -114,14 +114,14 @@ describe('CartoesTabela', () => {
     expect(el.textContent).toContain('Nenhum cartão cadastrado');
   });
 
-  it('inativa um cartão ativo e avisa a página', async () => {
+  it('desativa um cartão ativo e avisa a página', async () => {
     cartaoService.alterarStatus.mockReturnValue(of(undefined));
     const { fixture, linhas } = await criar();
 
     linhas()[0].querySelector<HTMLButtonElement>('button')!.click();
 
     expect(cartaoService.alterarStatus).toHaveBeenCalledWith(1, 1, false);
-    expect(toast.sucesso).toHaveBeenCalledWith('Cartão inativado.');
+    expect(toast.sucesso).toHaveBeenCalledWith('Cartão desativado.');
     expect(fixture.componentInstance.alterado).toBe(1);
   });
 

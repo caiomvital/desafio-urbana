@@ -20,9 +20,12 @@ import com.desafio.desafio_cartoes.dto.CartaoResponseDTO;
 import com.desafio.desafio_cartoes.dto.CartaoUpdateDTO;
 import com.desafio.desafio_cartoes.service.CartaoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
+@Tag(name = "Cartões (administração)")
 @RequestMapping("/cartoes")
 public class CartaoController {
 
@@ -32,6 +35,7 @@ public class CartaoController {
         this.service = service;
     }
 
+    @Operation(summary = "Lista todos os cartões (ADMIN)")
     @GetMapping
     public List<CartaoResponseDTO> listar() {
         return service.listar()
@@ -40,34 +44,40 @@ public class CartaoController {
         .toList();
     }
 
+    @Operation(summary = "Consulta um cartão (ADMIN)")
     @GetMapping("/{id}")
     public CartaoResponseDTO localizar(@PathVariable Long id) {
         return CartaoResponseDTO.de(service.localizar(id));
     }
 
+    @Operation(summary = "Cadastra um cartão para um usuário (ADMIN)")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CartaoResponseDTO cadastrar(@RequestParam Long usuarioId, @Valid @RequestBody CartaoRequestDTO cartao) {
         return CartaoResponseDTO.de(service.cadastrar(cartao, usuarioId));
     }
 
+    @Operation(summary = "Altera nome e tipo do cartão (ADMIN)")
     @PutMapping("/{id}")
     public CartaoResponseDTO atualizar(@PathVariable Long id, @Valid @RequestBody CartaoUpdateDTO cartao) {
         return CartaoResponseDTO.de(service.atualizar(id, cartao));
     }
 
+    @Operation(summary = "Remove um cartão (ADMIN)")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long id) {
         service.remover(id);
     }
 
+    @Operation(summary = "Ativa um cartão (ADMIN)")
     @PatchMapping("/{id}/ativar")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void ativar(@PathVariable Long id) {
         service.ativar(id);
     }
 
+    @Operation(summary = "Inativa um cartão (ADMIN)")
     @PatchMapping("/{id}/desativar")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void desativar(@PathVariable Long id) {

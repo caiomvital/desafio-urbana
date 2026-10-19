@@ -4,7 +4,7 @@ Interface Angular para o cadastro de usuários e cartões de ônibus. Consome a 
 
 ## Requisitos
 
-- Node 20+ e npm
+- Node 22+ e npm
 - API rodando em `http://localhost:8080` (o CORS do backend libera `http://localhost:4200`)
 
 ## Como executar
@@ -24,7 +24,7 @@ A URL da API fica no token `API_URL` em `src/app/core/api.config.ts`.
 | Perfil | O que pode fazer |
 | --- | --- |
 | Visitante | Entrar e criar conta |
-| Usuário | Ver resumo, editar o perfil, listar/adicionar/remover/ativar/inativar os próprios cartões |
+| Usuário | Ver resumo, editar o perfil, listar/adicionar/remover/ativar/desativar os próprios cartões |
 | Administrador | Tudo acima, mais: CRUD de usuários, cartões de qualquer usuário e lista global de cartões (com edição) |
 
 As listas têm busca, filtros (tipo e situação, nos cartões) e paginação. Exclusões pedem confirmação e as ações exibem avisos (toasts).

@@ -9,9 +9,12 @@ import com.desafio.desafio_cartoes.dto.LoginRequestDTO;
 import com.desafio.desafio_cartoes.dto.LoginResponseDTO;
 import com.desafio.desafio_cartoes.service.AuthService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
+@Tag(name = "Autenticação")
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -21,6 +24,7 @@ public class AuthController {
         this.service = service;
     }
 
+    @Operation(summary = "Autentica o usuário e devolve o token JWT")
     @PostMapping("/login")
     public LoginResponseDTO login(@Valid @RequestBody LoginRequestDTO dto) {
         return service.login(dto);

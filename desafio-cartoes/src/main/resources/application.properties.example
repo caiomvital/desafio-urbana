@@ -1,19 +1,22 @@
 spring.application.name=desafio-cartoes
 
-# PostgreSQL
-spring.datasource.url=jdbc:postgresql://localhost:5432/desafio_cartoes
-spring.datasource.username=postgres
-spring.datasource.password=SUA_SENHA
+# PostgreSQL (cada valor pode ser sobrescrito por variável de ambiente)
+spring.datasource.url=${DB_URL:jdbc:postgresql://localhost:5432/desafio_cartoes}
+spring.datasource.username=${DB_USERNAME:postgres}
+spring.datasource.password=${DB_PASSWORD:SUA_SENHA}
 
 # JPA / Hibernate (o schema é criado pelo Flyway em db/migration)
 spring.jpa.hibernate.ddl-auto=validate
-spring.jpa.show-sql=true
+spring.jpa.show-sql=${SHOW_SQL:false}
 spring.jpa.open-in-view=false
 
 # JWT (segredo com no mínimo 32 caracteres)
-app.jwt.secret=TROQUE-ESTE-SEGREDO-POR-UM-VALOR-LONGO-E-ALEATORIO
-app.jwt.validade=2h
+app.jwt.secret=${JWT_SECRET:TROQUE-ESTE-SEGREDO-POR-UM-VALOR-LONGO-E-ALEATORIO}
+app.jwt.validade=${JWT_VALIDADE:2h}
 
 # Administrador criado na primeira execução
-app.admin.email=admin@desafio.com
-app.admin.senha=admin123
+app.admin.email=${ADMIN_EMAIL:admin@desafio.com}
+app.admin.senha=${ADMIN_SENHA:admin123}
+
+# Origens liberadas no CORS (separadas por vírgula)
+app.cors.origens=${CORS_ORIGENS:http://localhost:4200}

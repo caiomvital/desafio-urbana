@@ -9,7 +9,7 @@ import { ToastService } from '../toast/toast.service';
 
 const TAMANHO_PAGINA = 10;
 
-/** Tabela de cartões com busca, filtros, paginação e ações (ativar/inativar, remover). */
+/** Tabela de cartões com busca, filtros, paginação e ações (ativar/desativar, remover). */
 @Component({
   selector: 'app-cartoes-tabela',
   imports: [RouterLink, Paginacao],
@@ -69,7 +69,7 @@ export class CartoesTabela {
     const ativar = !cartao.status;
     this.cartaoService.alterarStatus(cartao.usuarioId, cartao.id, ativar).subscribe({
       next: () => {
-        this.toast.sucesso(ativar ? 'Cartão ativado.' : 'Cartão inativado.');
+        this.toast.sucesso(ativar ? 'Cartão ativado.' : 'Cartão desativado.');
         this.alterado.emit();
       },
       error: (e) => this.toast.erro(mensagemDeErro(e)),

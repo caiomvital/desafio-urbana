@@ -11,6 +11,7 @@ import com.desafio.desafio_cartoes.dto.UsuarioRequestDTO;
 import com.desafio.desafio_cartoes.dto.UsuarioUpdateDTO;
 import com.desafio.desafio_cartoes.entity.Usuario;
 import com.desafio.desafio_cartoes.exception.ConflitoException;
+import com.desafio.desafio_cartoes.factory.UsuarioFactory;
 import com.desafio.desafio_cartoes.repository.CartaoRepository;
 import com.desafio.desafio_cartoes.repository.UsuarioRepository;
 
@@ -39,9 +40,7 @@ public class UsuarioService {
             throw new ConflitoException("Já existe um usuário com este e-mail.");
         }
 
-        Usuario usuario = new Usuario(dto.nome(), dto.email(), passwordEncoder.encode(dto.senha()));
-
-        return repository.save(usuario);
+        return repository.save(UsuarioFactory.comum(dto.nome(), dto.email(), passwordEncoder.encode(dto.senha())));
     }
 
     @Transactional(readOnly = true)

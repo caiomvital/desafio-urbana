@@ -11,6 +11,7 @@ import com.desafio.desafio_cartoes.dto.CartaoUpdateDTO;
 import com.desafio.desafio_cartoes.entity.Cartao;
 import com.desafio.desafio_cartoes.entity.Usuario;
 import com.desafio.desafio_cartoes.exception.ConflitoException;
+import com.desafio.desafio_cartoes.factory.CartaoFactory;
 import com.desafio.desafio_cartoes.repository.CartaoRepository;
 import com.desafio.desafio_cartoes.repository.UsuarioRepository;
 
@@ -36,10 +37,7 @@ public class CartaoService {
             throw new ConflitoException("Já existe um cartão com este número.");
         }
 
-        Cartao cartao = new Cartao(dto.numeroCartao(), dto.nome(), true, dto.tipoCartao());
-        cartao.setUsuario(usuario);
-
-        return repository.save(cartao);
+        return repository.save(CartaoFactory.criar(dto, usuario));
     }
 
     @Transactional(readOnly = true)

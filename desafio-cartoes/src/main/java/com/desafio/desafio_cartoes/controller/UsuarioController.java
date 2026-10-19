@@ -23,10 +23,13 @@ import com.desafio.desafio_cartoes.dto.UsuarioUpdateDTO;
 import com.desafio.desafio_cartoes.service.CartaoService;
 import com.desafio.desafio_cartoes.service.UsuarioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 
 @RestController
+@Tag(name = "Usuários")
 @RequestMapping ("/usuarios")
 public class UsuarioController {
 
@@ -40,29 +43,34 @@ public class UsuarioController {
         this.cartaoService = cartaoService;
     }
 
+    @Operation(summary = "Lista todos os usuários (ADMIN)")
     @GetMapping
     public List<UsuarioResponseDTO> listar(){
         return service.listar().stream().map(UsuarioResponseDTO::de).toList();
     }
 
+    @Operation(summary = "Consulta um usuário (dono ou ADMIN)")
     @GetMapping("/{id}")
     @PreAuthorize(DONO_OU_ADMIN)
     public UsuarioResponseDTO localizar(@PathVariable Long id){
         return UsuarioResponseDTO.de(service.localizar(id));
     }
 
+    @Operation(summary = "Cadastra um usuário (público)")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UsuarioResponseDTO cadastrar(@Valid @RequestBody UsuarioRequestDTO dto) {
         return UsuarioResponseDTO.de(service.cadastrar(dto));
     }
 
+    @Operation(summary = "Altera um usuário (dono ou ADMIN)")
     @PutMapping("/{id}")
     @PreAuthorize(DONO_OU_ADMIN)
     public UsuarioResponseDTO atualizar(@PathVariable Long id, @Valid @RequestBody UsuarioUpdateDTO dto) {
         return UsuarioResponseDTO.de(service.atualizar(id, dto));
     }
 
+    @Operation(summary = "Remove um usuário sem cartões (dono ou ADMIN)")
     @DeleteMapping("/{id}")
     @PreAuthorize(DONO_OU_ADMIN)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -72,12 +80,14 @@ public class UsuarioController {
 
     // ---- Cartões do usuário ----
 
+    @Operation(summary = "Lista os cartões do usuário")
     @GetMapping("/{id}/cartoes")
     @PreAuthorize(DONO_OU_ADMIN)
     public List<CartaoResponseDTO> listarCartoes(@PathVariable Long id) {
         return cartaoService.listarPorUsuario(id).stream().map(CartaoResponseDTO::de).toList();
     }
 
+    @Operation(summary = "Adiciona um cartão ao usuário")
     @PostMapping("/{id}/cartoes")
     @PreAuthorize(DONO_OU_ADMIN)
     @ResponseStatus(HttpStatus.CREATED)
@@ -85,6 +95,7 @@ public class UsuarioController {
         return CartaoResponseDTO.de(cartaoService.cadastrar(dto, id));
     }
 
+    @Operation(summary = "Remove um cartão do usuário")
     @DeleteMapping("/{id}/cartoes/{cartaoId}")
     @PreAuthorize(DONO_OU_ADMIN)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -92,6 +103,7 @@ public class UsuarioController {
         cartaoService.removerDoUsuario(id, cartaoId);
     }
 
+    @Operation(summary = "Ativa um cartão do usuário")
     @PatchMapping("/{id}/cartoes/{cartaoId}/ativar")
     @PreAuthorize(DONO_OU_ADMIN)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -99,6 +111,7 @@ public class UsuarioController {
         cartaoService.alterarStatusDoUsuario(id, cartaoId, true);
     }
 
+    @Operation(summary = "Inativa um cartão do usuário")
     @PatchMapping("/{id}/cartoes/{cartaoId}/desativar")
     @PreAuthorize(DONO_OU_ADMIN)
     @ResponseStatus(HttpStatus.NO_CONTENT)

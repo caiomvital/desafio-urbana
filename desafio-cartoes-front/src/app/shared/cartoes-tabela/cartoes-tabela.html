@@ -76,11 +76,11 @@
               <button
                 type="button"
                 class="btn btn-sm btn-outline-secondary me-1"
-                [title]="c.status ? 'Inativar' : 'Ativar'"
+                [title]="c.status ? 'Desativar' : 'Ativar'"
                 (click)="alternar(c)"
               >
                 <i class="bi" [class.bi-toggle-on]="c.status" [class.bi-toggle-off]="!c.status"></i>
-                {{ c.status ? 'Inativar' : 'Ativar' }}
+                {{ c.status ? 'Desativar' : 'Ativar' }}
               </button>
               @if (podeEditar()) {
                 <a class="btn btn-sm btn-outline-primary me-1" [routerLink]="['/admin/cartoes', c.id, 'editar']">

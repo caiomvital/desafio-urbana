@@ -6,9 +6,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.desafio.desafio_cartoes.entity.Perfil;
-import com.desafio.desafio_cartoes.entity.Usuario;
 import com.desafio.desafio_cartoes.repository.UsuarioRepository;
+import com.desafio.desafio_cartoes.factory.UsuarioFactory;
 
 /**
  * Garante a existência de um administrador inicial (credenciais em {@code app.admin.*}).
@@ -35,8 +34,6 @@ public class AdminInitializer implements ApplicationRunner {
         if (repository.buscarPorEmail(email).isPresent()) {
             return;
         }
-        Usuario admin = new Usuario("Administrador", email, passwordEncoder.encode(senha));
-        admin.setPerfil(Perfil.ADMIN);
-        repository.save(admin);
+        repository.save(UsuarioFactory.administrador("Administrador", email, passwordEncoder.encode(senha)));
     }
 }
