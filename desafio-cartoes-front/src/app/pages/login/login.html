@@ -1,0 +1,54 @@
+<div class="login-wrapper d-flex align-items-center justify-content-center p-3">
+  <div class="card shadow-sm login-card w-100">
+    <div class="card-body p-4">
+      <div class="text-center mb-4">
+        <i class="bi bi-credit-card-2-front text-primary fs-1"></i>
+        <h1 class="h4 mt-2">Cartões de Ônibus</h1>
+        <p class="text-body-secondary mb-0">Acesse sua conta</p>
+      </div>
+
+      @if (erro()) {
+        <div class="alert alert-danger" role="alert">{{ erro() }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="entrar()" novalidate>
+        <div class="mb-3">
+          <label for="email" class="form-label">E-mail</label>
+          <input
+            id="email"
+            type="email"
+            class="form-control"
+            formControlName="email"
+            autocomplete="username"
+            [class.is-invalid]="form.controls.email.invalid && form.controls.email.touched"
+          />
+          <div class="invalid-feedback">Informe um e-mail válido.</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="senha" class="form-label">Senha</label>
+          <input
+            id="senha"
+            type="password"
+            class="form-control"
+            formControlName="senha"
+            autocomplete="current-password"
+            [class.is-invalid]="form.controls.senha.invalid && form.controls.senha.touched"
+          />
+          <div class="invalid-feedback">Informe a senha.</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" [disabled]="enviando()">
+          @if (enviando()) {
+            <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+          }
+          Entrar
+        </button>
+      </form>
+
+      <p class="text-center mt-3 mb-0">
+        Não tem conta? <a routerLink="/cadastro">Cadastre-se</a>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <h1 class="h3 mb-0">Cartões</h1>
+  <a class="btn btn-primary" routerLink="/admin/cartoes/novo"><i class="bi bi-plus-lg"></i> Novo cartão</a>
+</div>
+
+@if (erro()) {
+  <div class="alert alert-danger" role="alert">{{ erro() }}</div>
+}
+
+@if (carregando()) {
+  <div class="text-center py-5"><div class="spinner-border text-primary" role="status"></div></div>
+} @else {
+  <app-cartoes-tabela
+    [cartoes]="cartoes()"
+    [mostrarUsuario]="true"
+    [nomesUsuarios]="nomesUsuarios()"
+    [podeEditar]="true"
+    (alterado)="carregar()"
+  />
+}

@@ -1,0 +1,63 @@
+<a [routerLink]="voltar" class="small text-decoration-none"><i class="bi bi-arrow-left"></i> Voltar</a>
+<h1 class="h3 mb-3">
+  {{ proprio ? 'Meu perfil' : editando ? 'Editar usuário' : 'Novo usuário' }}
+</h1>
+
+<div class="card shadow-sm form-card">
+  <div class="card-body">
+    @if (erro()) {
+      <div class="alert alert-danger" role="alert">{{ erro() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="salvar()" novalidate>
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input
+          id="nome"
+          type="text"
+          class="form-control"
+          formControlName="nome"
+          [class.is-invalid]="invalido(form.controls.nome)"
+        />
+        <div class="invalid-feedback">{{ mensagem(form.controls.nome) }}</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          formControlName="email"
+          [class.is-invalid]="invalido(form.controls.email)"
+        />
+        <div class="invalid-feedback">{{ mensagem(form.controls.email) }}</div>
+      </div>
+
+      @if (!editando) {
+        <div class="mb-3">
+          <label for="senha" class="form-label">Senha</label>
+          <input
+            id="senha"
+            type="password"
+            class="form-control"
+            formControlName="senha"
+            autocomplete="new-password"
+            [class.is-invalid]="invalido(form.controls.senha)"
+          />
+          <div class="invalid-feedback">{{ mensagem(form.controls.senha) }}</div>
+        </div>
+      }
+
+      <div class="d-flex gap-2 mt-4">
+        <button type="submit" class="btn btn-primary" [disabled]="enviando()">
+          @if (enviando()) {
+            <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+          }
+          Salvar
+        </button>
+        <a class="btn btn-outline-secondary" [routerLink]="voltar">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

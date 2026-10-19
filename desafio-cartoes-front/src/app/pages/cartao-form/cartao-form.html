@@ -1,0 +1,73 @@
+<a [routerLink]="voltar" class="small text-decoration-none"><i class="bi bi-arrow-left"></i> Voltar</a>
+<h1 class="h3 mb-3">{{ editando ? 'Editar cartão' : 'Novo cartão' }}</h1>
+
+<div class="card shadow-sm form-card">
+  <div class="card-body">
+    @if (erro()) {
+      <div class="alert alert-danger" role="alert">{{ erro() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="salvar()" novalidate>
+      @if (modo === 'global') {
+        <div class="mb-3">
+          <label for="usuarioId" class="form-label">Usuário</label>
+          <select
+            id="usuarioId"
+            class="form-select"
+            formControlName="usuarioId"
+            [class.is-invalid]="invalido(form.controls.usuarioId)"
+          >
+            <option [ngValue]="null" disabled>Selecione um usuário</option>
+            @for (u of usuarios(); track u.id) {
+              <option [ngValue]="u.id">{{ u.nome }} ({{ u.email }})</option>
+            }
+          </select>
+          <div class="invalid-feedback">{{ mensagem(form.controls.usuarioId) }}</div>
+        </div>
+      }
+
+      <div class="mb-3">
+        <label for="numeroCartao" class="form-label">Número do cartão</label>
+        <input
+          id="numeroCartao"
+          type="number"
+          class="form-control"
+          formControlName="numeroCartao"
+          [class.is-invalid]="invalido(form.controls.numeroCartao)"
+        />
+        <div class="invalid-feedback">{{ mensagem(form.controls.numeroCartao) }}</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input
+          id="nome"
+          type="text"
+          class="form-control"
+          formControlName="nome"
+          [class.is-invalid]="invalido(form.controls.nome)"
+        />
+        <div class="invalid-feedback">{{ mensagem(form.controls.nome) }}</div>
+      </div>
+
+      <div class="mb-4">
+        <label for="tipoCartao" class="form-label">Tipo</label>
+        <select id="tipoCartao" class="form-select" formControlName="tipoCartao">
+          @for (t of tipos; track t.valor) {
+            <option [value]="t.valor">{{ t.rotulo }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="enviando()">
+          @if (enviando()) {
+            <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+          }
+          Salvar
+        </button>
+        <a class="btn btn-outline-secondary" [routerLink]="voltar">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

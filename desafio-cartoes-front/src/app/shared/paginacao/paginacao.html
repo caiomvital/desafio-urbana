@@ -1,0 +1,17 @@
+@if (totalPaginas() > 1) {
+  <nav aria-label="Paginação">
+    <ul class="pagination pagination-sm justify-content-center mb-0">
+      <li class="page-item" [class.disabled]="pagina() === 1">
+        <button type="button" class="page-link" (click)="ir(pagina() - 1)">Anterior</button>
+      </li>
+      @for (p of paginas(); track p) {
+        <li class="page-item" [class.active]="p === pagina()">
+          <button type="button" class="page-link" (click)="ir(p)">{{ p }}</button>
+        </li>
+      }
+      <li class="page-item" [class.disabled]="pagina() === totalPaginas()">
+        <button type="button" class="page-link" (click)="ir(pagina() + 1)">Próxima</button>
+      </li>
+    </ul>
+  </nav>
+}

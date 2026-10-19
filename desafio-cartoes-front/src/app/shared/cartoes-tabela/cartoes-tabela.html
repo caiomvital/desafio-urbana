@@ -1,0 +1,100 @@
+<div class="row g-2 mb-3">
+  <div class="col-12 col-md-6">
+    <input
+      type="search"
+      class="form-control"
+      placeholder="Buscar por nome ou número"
+      aria-label="Buscar cartões"
+      [value]="busca()"
+      (input)="filtrar('busca', $any($event.target).value)"
+    />
+  </div>
+  <div class="col-6 col-md-3">
+    <select
+      class="form-select"
+      aria-label="Filtrar por tipo"
+      [value]="tipo()"
+      (change)="filtrar('tipo', $any($event.target).value)"
+    >
+      <option value="">Todos os tipos</option>
+      @for (t of tipos; track t.valor) {
+        <option [value]="t.valor">{{ t.rotulo }}</option>
+      }
+    </select>
+  </div>
+  <div class="col-6 col-md-3">
+    <select
+      class="form-select"
+      aria-label="Filtrar por situação"
+      [value]="situacao()"
+      (change)="filtrar('situacao', $any($event.target).value)"
+    >
+      <option value="">Todas as situações</option>
+      <option value="ativos">Ativos</option>
+      <option value="inativos">Inativos</option>
+    </select>
+  </div>
+</div>
+
+@if (cartoes().length === 0) {
+  <div class="text-center text-body-secondary py-5">
+    <i class="bi bi-credit-card fs-1 d-block mb-2"></i>
+    Nenhum cartão cadastrado.
+  </div>
+} @else if (filtrados().length === 0) {
+  <div class="text-center text-body-secondary py-5">Nenhum cartão encontrado para o filtro informado.</div>
+} @else {
+  <div class="table-responsive">
+    <table class="table table-hover align-middle bg-body">
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Nome</th>
+          <th>Tipo</th>
+          @if (mostrarUsuario()) {
+            <th>Usuário</th>
+          }
+          <th>Situação</th>
+          <th class="text-end">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (c of visiveis(); track c.id) {
+          <tr>
+            <td>{{ c.numeroCartao }}</td>
+            <td>{{ c.nome }}</td>
+            <td>{{ rotuloTipo(c.tipoCartao) }}</td>
+            @if (mostrarUsuario()) {
+              <td>{{ nomesUsuarios()[c.usuarioId] ?? '#' + c.usuarioId }}</td>
+            }
+            <td>
+              <span class="badge" [class.text-bg-success]="c.status" [class.text-bg-secondary]="!c.status">
+                {{ c.status ? 'Ativo' : 'Inativo' }}
+              </span>
+            </td>
+            <td class="text-end text-nowrap">
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-secondary me-1"
+                [title]="c.status ? 'Inativar' : 'Ativar'"
+                (click)="alternar(c)"
+              >
+                <i class="bi" [class.bi-toggle-on]="c.status" [class.bi-toggle-off]="!c.status"></i>
+                {{ c.status ? 'Inativar' : 'Ativar' }}
+              </button>
+              @if (podeEditar()) {
+                <a class="btn btn-sm btn-outline-primary me-1" [routerLink]="['/admin/cartoes', c.id, 'editar']">
+                  <i class="bi bi-pencil"></i> Editar
+                </a>
+              }
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="remover(c)">
+                <i class="bi bi-trash"></i> Remover
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <app-paginacao [total]="filtrados().length" [tamanho]="tamanhoPagina" [(pagina)]="pagina" />
+}

@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-md bg-primary" data-bs-theme="dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/inicio" (click)="fecharMenu()">
+      <i class="bi bi-credit-card-2-front me-2"></i>Cartões de Ônibus
+    </a>
+    <button
+      type="button"
+      class="navbar-toggler"
+      aria-label="Alternar menu"
+      [attr.aria-expanded]="menuAberto()"
+      (click)="alternarMenu()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse collapse" [class.show]="menuAberto()">
+      <ul class="navbar-nav me-auto" (click)="fecharMenu()">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/inicio" routerLinkActive="active">Início</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/meus-cartoes" routerLinkActive="active">Meus cartões</a>
+        </li>
+        @if (auth.admin()) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/usuarios" routerLinkActive="active">Usuários</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/cartoes" routerLinkActive="active">Cartões</a>
+          </li>
+        }
+      </ul>
+
+      <div class="d-flex flex-wrap align-items-center gap-2 text-white">
+        <a class="btn btn-link link-light text-decoration-none p-0" routerLink="/perfil" (click)="fecharMenu()">
+          <i class="bi bi-person-circle me-1"></i>{{ auth.sessao()?.nome }}
+        </a>
+        @if (auth.admin()) {
+          <span class="badge text-bg-light">Admin</span>
+        }
+        <button type="button" class="btn btn-outline-light btn-sm" (click)="sair()">
+          <i class="bi bi-box-arrow-right me-1"></i>Sair
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="container py-4">
+  <router-outlet />
+</main>

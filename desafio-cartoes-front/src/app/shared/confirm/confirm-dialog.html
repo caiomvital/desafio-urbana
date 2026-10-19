@@ -1,0 +1,28 @@
+@if (confirm.pedido(); as pedido) {
+  <div class="modal d-block" tabindex="-1" role="dialog" aria-modal="true" (click)="confirm.responder(false)">
+    <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5">{{ pedido.titulo }}</h2>
+          <button type="button" class="btn-close" aria-label="Fechar" (click)="confirm.responder(false)"></button>
+        </div>
+        <div class="modal-body">{{ pedido.mensagem }}</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" (click)="confirm.responder(false)">
+            Cancelar
+          </button>
+          <button
+            type="button"
+            class="btn"
+            [class.btn-danger]="pedido.perigo"
+            [class.btn-primary]="!pedido.perigo"
+            (click)="confirm.responder(true)"
+          >
+            {{ pedido.textoConfirmar ?? 'Confirmar' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop show"></div>
+}

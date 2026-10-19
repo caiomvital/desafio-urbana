@@ -1,0 +1,80 @@
+<div class="cadastro-wrapper d-flex align-items-center justify-content-center p-3">
+  <div class="card shadow-sm cadastro-card w-100">
+    <div class="card-body p-4">
+      <div class="text-center mb-4">
+        <i class="bi bi-person-plus text-primary fs-1"></i>
+        <h1 class="h4 mt-2">Criar conta</h1>
+        <p class="text-body-secondary mb-0">Cadastre-se para gerenciar seus cartões</p>
+      </div>
+
+      @if (erro()) {
+        <div class="alert alert-danger" role="alert">{{ erro() }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="cadastrar()" novalidate>
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input
+            id="nome"
+            type="text"
+            class="form-control"
+            formControlName="nome"
+            autocomplete="name"
+            [class.is-invalid]="invalido(form.controls.nome)"
+          />
+          <div class="invalid-feedback">{{ mensagem(form.controls.nome) }}</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">E-mail</label>
+          <input
+            id="email"
+            type="email"
+            class="form-control"
+            formControlName="email"
+            autocomplete="email"
+            [class.is-invalid]="invalido(form.controls.email)"
+          />
+          <div class="invalid-feedback">{{ mensagem(form.controls.email) }}</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="senha" class="form-label">Senha</label>
+          <input
+            id="senha"
+            type="password"
+            class="form-control"
+            formControlName="senha"
+            autocomplete="new-password"
+            [class.is-invalid]="invalido(form.controls.senha)"
+          />
+          <div class="invalid-feedback">{{ mensagem(form.controls.senha) }}</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="confirmacao" class="form-label">Confirmar senha</label>
+          <input
+            id="confirmacao"
+            type="password"
+            class="form-control"
+            formControlName="confirmacao"
+            autocomplete="new-password"
+            [class.is-invalid]="invalido(form.controls.confirmacao)"
+          />
+          <div class="invalid-feedback">{{ mensagem(form.controls.confirmacao) }}</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" [disabled]="enviando()">
+          @if (enviando()) {
+            <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+          }
+          Cadastrar
+        </button>
+      </form>
+
+      <p class="text-center mt-3 mb-0">
+        Já tem conta? <a routerLink="/login">Entrar</a>
+      </p>
+    </div>
+  </div>
+</div>

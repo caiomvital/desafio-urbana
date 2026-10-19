@@ -1,0 +1,10 @@
+@use 'bootstrap/scss/bootstrap';
+@use 'bootstrap-icons/font/bootstrap-icons.css';
+
+body {
+  background-color: var(--bs-tertiary-bg);
+}
+
+.form-card {
+  max-width: 560px;
+}

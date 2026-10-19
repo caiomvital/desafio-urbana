@@ -1,0 +1,23 @@
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <div>
+    @if (!proprio) {
+      <a routerLink="/admin/usuarios" class="small text-decoration-none">
+        <i class="bi bi-arrow-left"></i> Usuários
+      </a>
+    }
+    <h1 class="h3 mb-0">
+      {{ proprio ? 'Meus cartões' : 'Cartões de ' + nomeUsuario() }}
+    </h1>
+  </div>
+  <a class="btn btn-primary" [routerLink]="linkNovo"><i class="bi bi-plus-lg"></i> Adicionar cartão</a>
+</div>
+
+@if (erro()) {
+  <div class="alert alert-danger" role="alert">{{ erro() }}</div>
+}
+
+@if (carregando()) {
+  <div class="text-center py-5"><div class="spinner-border text-primary" role="status"></div></div>
+} @else {
+  <app-cartoes-tabela [cartoes]="cartoes()" (alterado)="carregar()" />
+}
